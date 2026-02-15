@@ -36,7 +36,7 @@ let skippedJobs = [];
 let cardElements = [];
 let lastAction = null;
 
-// Render Cards
+// ---- Render Cards ----
 function createCard(job, index) {
   const card = document.createElement("div");
   card.className = "job-card";
@@ -58,7 +58,7 @@ function renderCards() {
   jobs.forEach((job, i) => createCard(job, i));
 }
 
-// Drag Logic with overlay
+// ---- Drag Logic with Green/Red overlay ----
 function addDragListeners(card, job) {
   let offsetX=0, offsetY=0, startX, startY, isDragging=false;
   const greenOverlay = card.querySelector(".swipe-overlay.green");
@@ -108,7 +108,7 @@ function addDragListeners(card, job) {
   }
 }
 
-// Swipe Logic
+// ---- Swipe Logic ----
 function handleSwipe(card, job, direction) {
   const flyX = direction==="right"? 1000 : -1000;
   card.style.transition="transform 0.5s ease";
@@ -122,7 +122,7 @@ function handleSwipe(card, job, direction) {
   } else skippedJobs.push(job);
 }
 
-// AI Modals
+// ---- AI Modals ----
 function showAIModal(job, generatedText=null) {
   aiModal.classList.remove("hidden");
   aiTextarea.value = generatedText || job.coverLetterSuggestions[0];
@@ -132,14 +132,37 @@ function showAIModal(job, generatedText=null) {
   aiReject.onclick = () => { skippedJobs.push(job); aiModal.classList.add("hidden"); };
 }
 
+// ---- Fixed AI Prompt Modal ----
+let currentJobPrompt = null;
+
 function showAIPrompt(job) {
+  currentJobPrompt = job;
   aiPromptModal.classList.remove("hidden");
-  promptYes.onclick = () => { aiPromptModal.classList.add("hidden"); showAIModal(job, `Generated AI cover letter for ${job.title} at ${job.company}.`); };
-  promptNo.onclick = () => { aiPromptModal.classList.add("hidden"); appliedJobs.push(job); };
-  promptCancel.onclick = () => { aiPromptModal.classList.add("hidden"); skippedJobs.push(job); };
 }
 
-// Undo
+// Bind prompt buttons once
+promptYes.addEventListener("click", () => {
+  if(!currentJobPrompt) return;
+  aiPromptModal.classList.add("hidden");
+  showAIModal(currentJobPrompt, `Generated AI cover letter for ${currentJobPrompt.title} at ${currentJobPrompt.company}.`);
+  currentJobPrompt = null;
+});
+
+promptNo.addEventListener("click", () => {
+  if(!currentJobPrompt) return;
+  aiPromptModal.classList.add("hidden");
+  appliedJobs.push(currentJobPrompt);
+  currentJobPrompt = null;
+});
+
+promptCancel.addEventListener("click", () => {
+  if(!currentJobPrompt) return;
+  aiPromptModal.classList.add("hidden");
+  skippedJobs.push(currentJobPrompt);
+  currentJobPrompt = null;
+});
+
+// ---- Undo ----
 undoBtn.onclick = () => {
   if(!lastAction) return;
   const job = lastAction.job;
@@ -149,20 +172,21 @@ undoBtn.onclick = () => {
   lastAction=null;
 };
 
-// Bottom Tabs
+// ---- Bottom Tabs ----
 tabDashboard.onclick = () => { swipeScreen.classList.remove("active"); dashboardScreen.classList.add("active"); updateDashboard(); };
 dashboardBack.onclick = () => { dashboardScreen.classList.remove("active"); swipeScreen.classList.add("active"); };
 tabProfile.onclick = () => { swipeScreen.classList.remove("active"); profileScreen.classList.add("active"); };
 profileBack.onclick = () => { profileScreen.classList.remove("active"); swipeScreen.classList.add("active"); };
 tabPayment.onclick = () => alert("Payment Plan: demo only");
 
-// Dashboard
+// ---- Dashboard ----
 function updateDashboard() {
-  appliedCountEl.textContent=appliedJobs.length;
-  skippedCountEl.textContent=skippedJobs.length;
+  appliedCountEl.textContent = appliedJobs.length;
+  skippedCountEl.textContent = skippedJobs.length;
   appliedList.innerHTML = appliedJobs.map(j=>`<li>${j.title} - ${j.company} (${j.source})</li>`).join("");
   skippedList.innerHTML = skippedJobs.map(j=>`<li>${j.title} - ${j.company} (${j.source})</li>`).join("");
 }
 
+// ---- Initialize ----
 renderCards();
 swipeScreen.classList.add("active");
