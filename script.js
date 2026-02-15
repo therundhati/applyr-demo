@@ -1,6 +1,11 @@
+// =========================
+// Applyr Demo Script.js
+// =========================
+
 // Wait for DOM to load
 document.addEventListener("DOMContentLoaded", () => {
-  // DOM Elements
+
+  // --- DOM Elements ---
   const swipeScreen = document.getElementById("swipe-screen");
   const dashboardScreen = document.getElementById("dashboard-screen");
   const profileScreen = document.getElementById("profile-screen");
@@ -32,14 +37,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const tabPayment = document.getElementById("tab-payment");
   const profileBack = document.getElementById("profile-back");
 
-  // State
+  // --- State ---
   let appliedJobs = [];
   let skippedJobs = [];
   let cardElements = [];
   let lastAction = null;
   let currentJobPrompt = null;
 
-  // ---- Render Cards ----
+  // --- Ensure modals hidden on load ---
+  aiModal.classList.add("hidden");
+  aiPromptModal.classList.add("hidden");
+  currentJobPrompt = null;
+
+  // =========================
+  // Render Cards
+  // =========================
   function createCard(job, index) {
     const card = document.createElement("div");
     card.className = "job-card";
@@ -63,7 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
     jobs.forEach((job, i) => createCard(job, i));
   }
 
-  // ---- Drag/Swipe Logic ----
+  // =========================
+  // Drag & Swipe Logic
+  // =========================
   function addDragListeners(card, job) {
     let offsetX = 0,
       offsetY = 0,
@@ -129,6 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // =========================
+  // Swipe Handling
+  // =========================
   function handleSwipe(card, job, direction) {
     const flyX = direction === "right" ? 1000 : -1000;
     card.style.transition = "transform 0.5s ease";
@@ -141,7 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (job.coverLetterSuggestions && job.coverLetterSuggestions.length > 0) {
         showAIModal(job);
       } else if (job.askForCoverLetter) {
-        showAIPrompt(job);
+        // Only trigger AI prompt after swipe
+        setTimeout(() => showAIPrompt(job), 50);
       } else {
         appliedJobs.push(job);
       }
@@ -150,7 +168,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ---- AI Modal ----
+  // =========================
+  // AI Modal
+  // =========================
   function showAIModal(job, generatedText = null) {
     aiModal.classList.remove("hidden");
     aiTextarea.value = generatedText || (job.coverLetterSuggestions ? job.coverLetterSuggestions[0] : "");
@@ -169,7 +189,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  // ---- AI Prompt Modal ----
+  // =========================
+  // AI Prompt Modal
+  // =========================
   function showAIPrompt(job) {
     currentJobPrompt = job;
     aiPromptModal.classList.remove("hidden");
@@ -199,7 +221,9 @@ document.addEventListener("DOMContentLoaded", () => {
     currentJobPrompt = null;
   });
 
-  // ---- Undo ----
+  // =========================
+  // Undo
+  // =========================
   undoBtn.onclick = () => {
     if (!lastAction) return;
     const job = lastAction.job;
@@ -209,7 +233,9 @@ document.addEventListener("DOMContentLoaded", () => {
     lastAction = null;
   };
 
-  // ---- Bottom Tabs ----
+  // =========================
+  // Bottom Tabs
+  // =========================
   tabDashboard.onclick = () => {
     swipeScreen.classList.remove("active");
     dashboardScreen.classList.add("active");
@@ -229,7 +255,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   tabPayment.onclick = () => alert("Payment Plan: demo only");
 
-  // ---- Dashboard ----
+  // =========================
+  // Dashboard Update
+  // =========================
   function deduplicateJobs(jobsArray) {
     const seen = new Set();
     return jobsArray.filter((job) => {
@@ -255,7 +283,10 @@ document.addEventListener("DOMContentLoaded", () => {
       .join("");
   }
 
-  // ---- Initialize ----
+  // =========================
+  // Initialize Demo
+  // =========================
   renderCards();
   swipeScreen.classList.add("active");
+
 });
