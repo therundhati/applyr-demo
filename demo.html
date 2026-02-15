@@ -6,13 +6,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <!-- Swipe Screen -->
-  <div id="swipe-screen" class="screen">
+  <div id="swipe-screen" class="screen active">
     <div class="phone-frame">
       <div id="card-stack"></div>
 
       <!-- AI Suggestion Modal -->
-      <div id="ai-modal" class="modal hidden">
+      <div id="ai-modal" class="modal">
         <div class="modal-content">
           <h3>Suggested Cover Letter</h3>
           <textarea id="ai-textarea" rows="6"></textarea>
@@ -25,9 +26,9 @@
       </div>
 
       <!-- AI Prompt Modal -->
-      <div id="ai-prompt-modal" class="modal hidden">
+      <div id="ai-prompt-modal" class="modal">
         <div class="modal-content">
-          <p>This job doesn't have a suggested cover letter. Do you want Applyr to generate one?</p>
+          <p>This job doesn't have a suggested cover letter. Generate one?</p>
           <div class="modal-buttons">
             <button id="prompt-yes">Yes</button>
             <button id="prompt-no">Apply without Cover Letter</button>
@@ -49,7 +50,7 @@
   </div>
 
   <!-- Dashboard Screen -->
-  <div id="dashboard-screen" class="screen hidden">
+  <div id="dashboard-screen" class="screen">
     <div class="phone-frame">
       <h2>Dashboard</h2>
       <p>Applied: <span id="applied-count">0</span> | Skipped: <span id="skipped-count">0</span></p>
@@ -62,13 +63,13 @@
   </div>
 
   <!-- Profile Screen -->
-  <div id="profile-screen" class="screen hidden">
+  <div id="profile-screen" class="screen">
     <div class="phone-frame">
       <h2>Profile</h2>
       <p><strong>Name:</strong> Arundhati Dixit</p>
-      <p><strong>Resume:</strong> <a href="arundhatidixit.pdf" target="_blank">arundhatidixit.pdf</a></p>
-      <p><strong>Professional Background:</strong> <span class="editable">MBA, Management Consulting (click to edit)</span></p>
-      <p><strong>Education:</strong> <span class="editable">IIT Delhi, MBA (click to edit)</span></p>
+      <p><strong>Resume:</strong> <a href="#">arundhatidixit.pdf</a></p>
+      <p><strong>Professional Background:</strong> <span class="editable">MBA, Management Consulting</span></p>
+      <p><strong>Education:</strong> <span class="editable">IIT Delhi, MBA</span></p>
       <p><strong>Ethnicity:</strong> Asian</p>
       <p><strong>Gender:</strong> Female</p>
       <p><strong>Disability:</strong> None</p>
@@ -78,6 +79,6 @@
   </div>
 
   <script src="jobs.js"></script>
-  <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
