@@ -6,54 +6,74 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Phone Frame -->
-  <div class="phone-frame">
-    <!-- Job Cards Container -->
-    <div id="card-stack"></div>
+  <!-- Swipe Screen -->
+  <div id="swipe-screen" class="screen">
+    <div class="phone-frame">
+      <div id="card-stack"></div>
 
-    <!-- AI Suggestion Modal -->
-    <div id="ai-modal" class="modal hidden">
-      <div class="modal-content">
-        <h3>Suggested Cover Letter</h3>
-        <textarea id="ai-textarea" rows="6"></textarea>
-        <div class="modal-buttons">
-          <button id="ai-accept">Apply</button>
-          <button id="ai-edit">Edit & Apply</button>
-          <button id="ai-reject">Cancel</button>
+      <!-- AI Suggestion Modal -->
+      <div id="ai-modal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Suggested Cover Letter</h3>
+          <textarea id="ai-textarea" rows="6"></textarea>
+          <div class="modal-buttons">
+            <button id="ai-accept">Apply</button>
+            <button id="ai-edit">Edit & Apply</button>
+            <button id="ai-reject">Cancel</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- AI Prompt Modal (for missing cover letter) -->
-    <div id="ai-prompt-modal" class="modal hidden">
-      <div class="modal-content">
-        <p>This job doesn't have a suggested cover letter. Do you want Applyr to generate one?</p>
-        <div class="modal-buttons">
-          <button id="prompt-yes">Yes</button>
-          <button id="prompt-no">Apply without Cover Letter</button>
-          <button id="prompt-cancel">Cancel</button>
+      <!-- AI Prompt Modal -->
+      <div id="ai-prompt-modal" class="modal hidden">
+        <div class="modal-content">
+          <p>This job doesn't have a suggested cover letter. Do you want Applyr to generate one?</p>
+          <div class="modal-buttons">
+            <button id="prompt-yes">Yes</button>
+            <button id="prompt-no">Apply without Cover Letter</button>
+            <button id="prompt-cancel">Cancel</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Dashboard Overlay -->
-    <div id="dashboard-overlay" class="overlay hidden">
-      <div class="overlay-content">
-        <h3>Dashboard</h3>
-        <p id="stats"></p>
-        <ul id="applied-list"></ul>
-        <button id="dashboard-close">Close</button>
+      <!-- Undo Button -->
+      <button id="undo-btn" class="undo-btn">Undo</button>
+
+      <!-- Bottom Tab -->
+      <div class="bottom-tab">
+        <button id="tab-dashboard">Dashboard</button>
+        <button id="tab-profile">Profile</button>
+        <button id="tab-payment">Payment Plan</button>
       </div>
     </div>
+  </div>
 
-    <!-- Undo Button -->
-    <button id="undo-btn" class="undo-btn">Undo</button>
+  <!-- Dashboard Screen -->
+  <div id="dashboard-screen" class="screen hidden">
+    <div class="phone-frame">
+      <h2>Dashboard</h2>
+      <p>Applied: <span id="applied-count">0</span> | Skipped: <span id="skipped-count">0</span></p>
+      <h3>Applied Jobs</h3>
+      <ul id="applied-list"></ul>
+      <h3>Skipped Jobs</h3>
+      <ul id="skipped-list"></ul>
+      <button id="dashboard-back">Back</button>
+    </div>
+  </div>
 
-    <!-- Bottom Tab -->
-    <div class="bottom-tab">
-      <button id="tab-dashboard">Dashboard</button>
-      <button id="tab-profile">Profile</button>
-      <button id="tab-payment">Payment Plan</button>
+  <!-- Profile Screen -->
+  <div id="profile-screen" class="screen hidden">
+    <div class="phone-frame">
+      <h2>Profile</h2>
+      <p><strong>Name:</strong> Arundhati Dixit</p>
+      <p><strong>Resume:</strong> <a href="arundhatidixit.pdf" target="_blank">arundhatidixit.pdf</a></p>
+      <p><strong>Professional Background:</strong> <span class="editable">MBA, Management Consulting (click to edit)</span></p>
+      <p><strong>Education:</strong> <span class="editable">IIT Delhi, MBA (click to edit)</span></p>
+      <p><strong>Ethnicity:</strong> Asian</p>
+      <p><strong>Gender:</strong> Female</p>
+      <p><strong>Disability:</strong> None</p>
+      <p><strong>Military Service:</strong> None</p>
+      <button id="profile-back">Back</button>
     </div>
   </div>
 
