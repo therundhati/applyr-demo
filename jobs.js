@@ -1,6 +1,16 @@
 // jobs.js
 const jobs = [
   {
+    title: "Product Manager",
+    company: "LinkedIn",
+    location: "San Francisco, CA",
+    source: "LinkedIn",
+    description: "Lead cross-functional teams to build scalable product features. Define roadmap and metrics.",
+    perks: ["401k", "Health Insurance", "Remote options"],
+    coverLetterSuggestions: [],   // empty means no auto AI modal
+    askForCoverLetter: true       // triggers AI prompt only after swipe
+  },
+  {
     title: "Senior Product Manager",
     company: "InnovateX",
     logo: "assets/innovatex.png",
