@@ -1,0 +1,60 @@
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.landing-container {
+  text-align: center;
+  max-width: 400px;
+}
+
+.launch-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #4CAF50;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.phone-frame {
+  width: 350px;
+  height: 600px;
+  border: 2px solid #ccc;
+  border-radius: 30px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.job-card {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
+
+#ai-popup {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width: 80%;
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.hidden { display: none; }
