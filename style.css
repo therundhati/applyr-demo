@@ -1,31 +1,69 @@
-body { margin:0; font-family:Arial,sans-serif; background:linear-gradient(135deg,#0A66C2,#0073B1); }
-.screen { display:none; }
-.screen.active { display:block; }
-.phone-frame { position:relative; width:375px; height:667px; background:#f2f2f2; border-radius:30px; margin:20px auto; padding:10px; box-sizing:border-box; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.3); }
-
-#card-stack { position:absolute; width:100%; height:80%; }
-
-.job-card h2 { text-decoration: underline; color: #0A66C2; }
-.job-card h3 { margin:5px 0; font-weight: normal; color:#555; } 
-.job-card p { text-decoration: none; color: #000; }
-.job-card .perks { font-size:12px; color:#0073B1; margin-top:10px; }
-
-#applied-list li, #skipped-list li {
-    color: #0A66C2;
-    text-decoration: underline;
-    cursor: pointer;
+/* Container for card stack */
+#card-stack {
+  position: relative;      /* ensures absolute cards stack properly */
+  width: 100%;
+  height: 80%;
+  margin-top: 10px;
 }
 
-.swipe-overlay { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:15px; pointer-events:none; opacity:0; transition:opacity 0.2s; }
-.swipe-overlay.green { background:rgba(40,167,69,0.3); }
-.swipe-overlay.red { background:rgba(220,53,69,0.3); }
+/* Job card styling */
+.job-card {
+  position: absolute;      /* stack cards on top of each other */
+  top: 0;
+  left: 50%;               /* center horizontally */
+  transform: translateX(-50%); /* adjust for left 50% */
+  width: 95%;
+  height: 90%;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  padding: 15px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  cursor: grab;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 0;              /* z-index set dynamically in JS */
+}
 
-.modal { display:none; position:absolute; top:0; left:0; width:100%; height:100%; justify-content:center; align-items:center; background:rgba(0,0,0,0.5); z-index:100; }
-.modal-content { background:white; border-radius:15px; padding:20px; width:80%; max-height:80%; overflow-y:auto; }
-.modal-buttons { display:flex; justify-content:space-around; margin-top:10px; }
-button { padding:8px 12px; border:none; border-radius:8px; cursor:pointer; background-color:#0A66C2; color:white; font-weight:bold; }
-button:hover { background-color:#0073B1; }
+/* Job title */
+.job-card h2 {
+  text-decoration: underline;
+  color: #0A66C2;
+  margin-top: 0;
+}
 
-.bottom-tab { position:absolute; bottom:0; width:100%; display:flex; justify-content:space-around; padding:10px 0; background:#fff; border-top:1px solid #ccc; }
-.undo-btn { position:absolute; bottom:60px; right:15px; background:#28a745; }
-.editable { background:#f0f0f0; padding:2px 4px; border-radius:4px; }
+/* Company / location */
+.job-card h3 {
+  margin: 5px 0;
+  font-weight: normal;
+  color: #555;
+}
+
+/* Job description */
+.job-card p {
+  text-decoration: none;
+  color: #000;
+  line-height: 1.5;
+}
+
+/* Perks text */
+.job-card .perks {
+  font-size: 12px;
+  color: #0073B1;
+  margin-top: 10px;
+}
+
+/* Swipe overlays */
+.swipe-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.swipe-overlay.green { background: rgba(40,167,69,0.3); }
+.swipe-overlay.red { background: rgba(220,53,69,0.3); }
