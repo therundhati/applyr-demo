@@ -6,25 +6,58 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Phone Frame -->
   <div class="phone-frame">
-    <div id="job-card-container"></div>
-    <div class="buttons">
-      <button id="skip-btn">❌ Skip</button>
-      <button id="apply-btn">✅ Apply</button>
+    <!-- Job Cards Container -->
+    <div id="card-stack"></div>
+
+    <!-- AI Suggestion Modal -->
+    <div id="ai-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Suggested Cover Letter</h3>
+        <textarea id="ai-textarea" rows="6"></textarea>
+        <div class="modal-buttons">
+          <button id="ai-accept">Apply</button>
+          <button id="ai-edit">Edit & Apply</button>
+          <button id="ai-reject">Cancel</button>
+        </div>
+      </div>
     </div>
-    <div id="ai-popup" class="hidden">
-      <p id="ai-text"></p>
-      <button id="accept-btn">Accept</button>
-      <button id="edit-btn">Edit</button>
-      <button id="reject-btn">Reject</button>
-      <textarea id="ai-edit" class="hidden"></textarea>
+
+    <!-- AI Prompt Modal (for missing cover letter) -->
+    <div id="ai-prompt-modal" class="modal hidden">
+      <div class="modal-content">
+        <p>This job doesn't have a suggested cover letter. Do you want Applyr to generate one?</p>
+        <div class="modal-buttons">
+          <button id="prompt-yes">Yes</button>
+          <button id="prompt-no">Apply without Cover Letter</button>
+          <button id="prompt-cancel">Cancel</button>
+        </div>
+      </div>
     </div>
-    <div id="summary" class="hidden">
-      <h2>Summary</h2>
-      <ul id="applied-list"></ul>
+
+    <!-- Dashboard Overlay -->
+    <div id="dashboard-overlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h3>Dashboard</h3>
+        <p id="stats"></p>
+        <ul id="applied-list"></ul>
+        <button id="dashboard-close">Close</button>
+      </div>
+    </div>
+
+    <!-- Undo Button -->
+    <button id="undo-btn" class="undo-btn">Undo</button>
+
+    <!-- Bottom Tab -->
+    <div class="bottom-tab">
+      <button id="tab-dashboard">Dashboard</button>
+      <button id="tab-profile">Profile</button>
+      <button id="tab-payment">Payment Plan</button>
     </div>
   </div>
 
+  <script src="jobs.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
