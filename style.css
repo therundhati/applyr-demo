@@ -5,10 +5,16 @@ body { margin:0; font-family:Arial,sans-serif; background:linear-gradient(135deg
 
 #card-stack { position:absolute; width:100%; height:80%; }
 
-.job-card { position:absolute; width:95%; height:90%; background:white; border-radius:15px; padding:15px; box-sizing:border-box; overflow-y:auto; cursor:grab; box-shadow:0 5px 20px rgba(0,0,0,0.2); transition: transform 0.3s ease; }
-.job-card h2,.job-card p { text-decoration:underline; color:#0A66C2; }
-.job-card h3 { margin:5px 0; font-weight:normal; color:#555; }
+.job-card h2 { text-decoration: underline; color: #0A66C2; }
+.job-card h3 { margin:5px 0; font-weight: normal; color:#555; } 
+.job-card p { text-decoration: none; color: #000; }
 .job-card .perks { font-size:12px; color:#0073B1; margin-top:10px; }
+
+#applied-list li, #skipped-list li {
+    color: #0A66C2;
+    text-decoration: underline;
+    cursor: pointer;
+}
 
 .swipe-overlay { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:15px; pointer-events:none; opacity:0; transition:opacity 0.2s; }
 .swipe-overlay.green { background:rgba(40,167,69,0.3); }
