@@ -1,79 +1,174 @@
-const jobs = [
-  {title:"Software Engineer", company:"TechCorp", location:"Remote", description:"Work on AI products.", coverLetter:null, aiVersions:["I am excited to apply for Software Engineer at TechCorp."]},
-  {title:"Data Analyst", company:"DataInc", location:"New York, NY", description:"Analyze business data.", coverLetter:null, aiVersions:["Looking forward to contributing as a Data Analyst at DataInc."]},
-  {title:"Product Manager", company:"InnovateX", location:"San Francisco, CA", description:"Lead product development.", coverLetter:"Ready to lead innovative products at InnovateX.", aiVersions:["Excited to join InnovateX as Product Manager."]}
-];
-
-let index = 0;
-let applied = [];
-
-const cardContainer = document.getElementById("job-card-container");
-const aiPopup = document.getElementById("ai-popup");
-const aiText = document.getElementById("ai-text");
+const cardStack = document.getElementById("card-stack");
+const aiModal = document.getElementById("ai-modal");
+const aiTextarea = document.getElementById("ai-textarea");
+const aiAccept = document.getElementById("ai-accept");
 const aiEdit = document.getElementById("ai-edit");
-const summary = document.getElementById("summary");
+const aiReject = document.getElementById("ai-reject");
+
+const aiPromptModal = document.getElementById("ai-prompt-modal");
+const promptYes = document.getElementById("prompt-yes");
+const promptNo = document.getElementById("prompt-no");
+const promptCancel = document.getElementById("prompt-cancel");
+
+const dashboardOverlay = document.getElementById("dashboard-overlay");
+const dashboardClose = document.getElementById("dashboard-close");
+const statsEl = document.getElementById("stats");
 const appliedList = document.getElementById("applied-list");
 
-function showJob() {
-  if(index >= jobs.length) {
-    cardContainer.innerHTML = "";
-    summary.classList.remove("hidden");
-    applied.forEach(j => {
-      const li = document.createElement("li");
-      li.textContent = `${j.title} @ ${j.company}`;
-      appliedList.appendChild(li);
-    });
-    return;
+const undoBtn = document.getElementById("undo-btn");
+
+let appliedJobs = [];
+let skippedJobs = [];
+let cardElements = [];
+let currentIndex = 0;
+let lastAction = null; // store last swipe
+
+function createCard(job, index) {
+  const card = document.createElement("div");
+  card.className = "job-card";
+  card.style.zIndex = jobs.length - index;
+  card.innerHTML = `
+    <h2>${job.title}</h2>
+    <h3>${job.company} - ${job.location} (${job.source})</h3>
+    <p>${job.description.replace(/\n/g,'<br>')}</p>
+    <p class="perks">${job.perks.join(" | ")}</p>
+  `;
+  cardStack.appendChild(card);
+  addDragListeners(card, job);
+  cardElements.push(card);
+}
+
+function renderCards() {
+  jobs.forEach((job, i) => createCard(job, i));
+}
+
+function addDragListeners(card, job) {
+  let offsetX = 0, offsetY = 0, startX, startY, isDragging = false;
+
+  card.addEventListener("mousedown", startDrag);
+  card.addEventListener("touchstart", startDrag);
+
+  function startDrag(e) {
+    isDragging = true;
+    startX = e.type === "mousedown" ? e.clientX : e.touches[0].clientX;
+    startY = e.type === "mousedown" ? e.clientY : e.touches[0].clientY;
+    document.addEventListener("mousemove", onDrag);
+    document.addEventListener("mouseup", endDrag);
+    document.addEventListener("touchmove", onDrag);
+    document.addEventListener("touchend", endDrag);
   }
-  const job = jobs[index];
-  cardContainer.innerHTML = `
-    <div class="job-card">
-      <h3>${job.title} @ ${job.company}</h3>
-      <p><strong>Location:</strong> ${job.location}</p>
-      <p>${job.description}</p>
-    </div>`;
+
+  function onDrag(e) {
+    if (!isDragging) return;
+    const x = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
+    const y = e.type.includes("mouse") ? e.clientY : e.touches[0].clientY;
+    offsetX = x - startX;
+    offsetY = y - startY;
+    const rotate = offsetX / 20;
+    card.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${rotate}deg)`;
+  }
+
+  function endDrag() {
+    isDragging = false;
+    document.removeEventListener("mousemove", onDrag);
+    document.removeEventListener("mouseup", endDrag);
+    document.removeEventListener("touchmove", onDrag);
+    document.removeEventListener("touchend", endDrag);
+
+    if (offsetX > 100) {
+      handleSwipe(card, job, "right");
+    } else if (offsetX < -100) {
+      handleSwipe(card, job, "left");
+    } else {
+      card.style.transform = "translate(0px,0px) rotate(0deg)";
+    }
+  }
 }
 
-function showAI(job) {
-  aiText.textContent = job.coverLetter || job.aiVersions[0];
-  aiPopup.classList.remove("hidden");
-}
+function handleSwipe(card, job, direction) {
+  const flyX = direction === "right" ? 1000 : -1000;
+  card.style.transition = "transform 0.5s ease";
+  card.style.transform = `translate(${flyX}px, 0px) rotate(${direction === "right" ? 20 : -20}deg)`;
 
-document.getElementById("apply-btn").onclick = () => {
-  const job = jobs[index];
-  if(!job.coverLetter) {
-    showAI(job);
+  setTimeout(() => card.remove(), 500);
+
+  lastAction = {job, direction};
+  
+  if (direction === "right") {
+    if (job.coverLetterSuggestions) {
+      showAIModal(job);
+    } else {
+      showAIPrompt(job);
+    }
   } else {
-    applied.push(job);
-    index++;
-    showJob();
+    skippedJobs.push(job);
   }
+}
+
+function showAIModal(job, generatedText=null) {
+  aiModal.classList.remove("hidden");
+  aiTextarea.value = generatedText || job.coverLetterSuggestions[0];
+  
+  aiAccept.onclick = () => {
+    appliedJobs.push(job);
+    aiModal.classList.add("hidden");
+  };
+
+  aiEdit.onclick = () => {
+    appliedJobs.push(job);
+    aiModal.classList.add("hidden");
+  };
+
+  aiReject.onclick = () => {
+    skippedJobs.push(job);
+    aiModal.classList.add("hidden");
+  };
+}
+
+function showAIPrompt(job) {
+  aiPromptModal.classList.remove("hidden");
+  
+  promptYes.onclick = () => {
+    aiPromptModal.classList.add("hidden");
+    // generate dummy AI suggestion
+    showAIModal(job, `Generated AI cover letter for ${job.title} at ${job.company}.`);
+  };
+
+  promptNo.onclick = () => {
+    aiPromptModal.classList.add("hidden");
+    appliedJobs.push(job);
+  };
+
+  promptCancel.onclick = () => {
+    aiPromptModal.classList.add("hidden");
+    skippedJobs.push(job); // or could leave on top
+  };
+}
+
+undoBtn.onclick = () => {
+  if (!lastAction) return;
+  const job = lastAction.job;
+  if (lastAction.direction === "right") {
+    appliedJobs = appliedJobs.filter(j => j !== job);
+  } else {
+    skippedJobs = skippedJobs.filter(j => j !== job);
+  }
+  createCard(job, 0); // restore on top
+  lastAction = null;
 };
 
-document.getElementById("skip-btn").onclick = () => {
-  index++;
-  showJob();
+document.getElementById("tab-dashboard").onclick = () => {
+  dashboardOverlay.classList.remove("hidden");
+  statsEl.textContent = `Applied: ${appliedJobs.length} | Skipped: ${skippedJobs.length}`;
+  appliedList.innerHTML = appliedJobs.map(j => `<li>${j.title} - ${j.company} (${j.source})</li>`).join("");
 };
 
-document.getElementById("accept-btn").onclick = () => {
-  jobs[index].coverLetter = aiText.textContent;
-  applied.push(jobs[index]);
-  aiPopup.classList.add("hidden");
-  index++;
-  showJob();
+dashboardClose.onclick = () => {
+  dashboardOverlay.classList.add("hidden");
 };
 
-document.getElementById("edit-btn").onclick = () => {
-  aiEdit.value = aiText.textContent;
-  aiEdit.classList.remove("hidden");
-  aiText.classList.add("hidden");
-};
+// Profile and Payment Plan demo buttons
+document.getElementById("tab-profile").onclick = () => alert("Profile: Upload resume / prefill attributes (demo only)");
+document.getElementById("tab-payment").onclick = () => alert("Payment Plan: Demo option only");
 
-document.getElementById("reject-btn").onclick = () => {
-  aiPopup.classList.add("hidden");
-  index++;
-  showJob();
-};
-
-// initialize first card
-showJob();
+renderCards();
