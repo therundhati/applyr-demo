@@ -11,6 +11,18 @@ const jobs = [
     askForCoverLetter: true       // triggers AI prompt only after swipe
   },
   {
+    title: "Management Consultant",
+    company: "StrategyWorks",
+    logo: "assets/strategyworks.png",
+    location: "New York, NY",
+    description: `StrategyWorks seeks an MBA-level Management Consultant to advise Fortune 500 clients on operational improvements and strategic initiatives. 
+Responsibilities include conducting market research, developing strategic recommendations, and presenting actionable insights to senior executives. 
+Candidates should have strong analytical skills, excellent communication abilities, and a proven track record in management consulting.`,
+    perks: ["Travel opportunities", "Professional development", "Flexible hours"],
+    // No coverLetterSuggestions → triggers AI prompt
+    source: "LinkedIn"
+  },
+  {
     title: "Senior Product Manager",
     company: "InnovateX",
     logo: "assets/innovatex.png",
@@ -23,18 +35,6 @@ The ideal candidate has experience in product strategy and user-centered design 
     coverLetterSuggestions: [
       `I am thrilled to apply for the Senior Product Manager position at InnovateX. With my experience leading cross-functional teams and driving product strategy in tech companies, I am confident in my ability to contribute effectively to your AI-powered analytics platform.`
     ],
-    source: "LinkedIn"
-  },
-  {
-    title: "Management Consultant",
-    company: "StrategyWorks",
-    logo: "assets/strategyworks.png",
-    location: "New York, NY",
-    description: `StrategyWorks seeks an MBA-level Management Consultant to advise Fortune 500 clients on operational improvements and strategic initiatives. 
-Responsibilities include conducting market research, developing strategic recommendations, and presenting actionable insights to senior executives. 
-Candidates should have strong analytical skills, excellent communication abilities, and a proven track record in management consulting.`,
-    perks: ["Travel opportunities", "Professional development", "Flexible hours"],
-    // No coverLetterSuggestions → triggers AI prompt
     source: "LinkedIn"
   },
   {
