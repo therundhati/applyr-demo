@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Applyr Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="phone-frame">
+    <div id="job-card-container"></div>
+    <div class="buttons">
+      <button id="skip-btn">❌ Skip</button>
+      <button id="apply-btn">✅ Apply</button>
+    </div>
+    <div id="ai-popup" class="hidden">
+      <p id="ai-text"></p>
+      <button id="accept-btn">Accept</button>
+      <button id="edit-btn">Edit</button>
+      <button id="reject-btn">Reject</button>
+      <textarea id="ai-edit" class="hidden"></textarea>
+    </div>
+    <div id="summary" class="hidden">
+      <h2>Summary</h2>
+      <ul id="applied-list"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
