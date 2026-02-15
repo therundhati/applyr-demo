@@ -1,60 +1,124 @@
 body {
-  font-family: sans-serif;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #0A66C2, #0073B1);
   display: flex;
   justify-content: center;
-  padding: 20px;
-}
-
-.landing-container {
-  text-align: center;
-  max-width: 400px;
-}
-
-.launch-btn {
-  display: inline-block;
-  padding: 12px 20px;
-  background: #4CAF50;
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
+  align-items: center;
+  height: 100vh;
 }
 
 .phone-frame {
-  width: 350px;
-  height: 600px;
-  border: 2px solid #ccc;
-  border-radius: 30px;
-  padding: 20px;
   position: relative;
+  width: 375px;
+  height: 667px;
+  background: #f2f2f2;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   overflow: hidden;
-  background: #f0f0f0;
+}
+
+#card-stack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .job-card {
+  position: absolute;
+  width: 95%;
+  height: 80%;
   background: white;
-  padding: 15px;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  margin-bottom: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  padding: 15px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  cursor: grab;
+  transition: transform 0.3s ease;
 }
 
-.buttons {
+.job-card h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.job-card h3 {
+  margin: 5px 0;
+  font-weight: normal;
+  color: #555;
+}
+
+.job-card p {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.job-card .perks {
+  font-size: 12px;
+  color: #0073B1;
+  margin-top: 10px;
+}
+
+.modal, .overlay {
+  position: absolute;
+  top:0; left:0;
+  width: 100%; height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+}
+
+.modal-content, .overlay-content {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.modal-buttons {
   display: flex;
   justify-content: space-around;
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
+  margin-top: 10px;
 }
 
-#ai-popup {
-  position: absolute;
-  top: 50%;
-  left: 10%;
-  width: 80%;
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #0A66C2;
+  color: white;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0073B1;
 }
 
 .hidden { display: none; }
+
+.bottom-tab {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  background: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.undo-btn {
+  position: absolute;
+  bottom: 60px;
+  right: 15px;
+  background: #28a745;
+}
