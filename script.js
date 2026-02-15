@@ -35,6 +35,7 @@ let appliedJobs = [];
 let skippedJobs = [];
 let cardElements = [];
 let lastAction = null;
+let currentJobPrompt = null; // track AI prompt
 
 // ---- Render Cards ----
 function createCard(job, index) {
@@ -101,7 +102,7 @@ function addDragListeners(card, job) {
     document.removeEventListener("touchend", endDrag);
 
     const threshold=100;
-    if(offsetX>threshold) handleSwipe(card, job, "right");
+    if(offsetX>threshold) handleSwipe(card, job, "right");  // only trigger after right swipe
     else if(offsetX<-threshold) handleSwipe(card, job, "left");
     else card.style.transform="translate(0px,0px) rotate(0deg)";
     greenOverlay.style.opacity=0; redOverlay.style.opacity=0;
@@ -117,24 +118,28 @@ function handleSwipe(card, job, direction) {
   lastAction={job,direction};
 
   if(direction==="right") {
-    if(job.coverLetterSuggestions) showAIModal(job);
-    else showAIPrompt(job);
+    // Only show AI modal if swipe happened and suggestions exist
+    if(job.coverLetterSuggestions && job.coverLetterSuggestions.length>0) {
+      showAIModal(job);
+    } else if(job.askForCoverLetter) {
+      showAIPrompt(job);
+    } else {
+      appliedJobs.push(job); // normal apply without cover letter
+    }
   } else skippedJobs.push(job);
 }
 
 // ---- AI Modals ----
 function showAIModal(job, generatedText=null) {
   aiModal.classList.remove("hidden");
-  aiTextarea.value = generatedText || job.coverLetterSuggestions[0];
+  aiTextarea.value = generatedText || (job.coverLetterSuggestions ? job.coverLetterSuggestions[0] : "");
 
   aiAccept.onclick = () => { appliedJobs.push(job); aiModal.classList.add("hidden"); };
   aiEdit.onclick = () => { appliedJobs.push(job); aiModal.classList.add("hidden"); };
   aiReject.onclick = () => { skippedJobs.push(job); aiModal.classList.add("hidden"); };
 }
 
-// ---- Fixed AI Prompt Modal ----
-let currentJobPrompt = null;
-
+// ---- AI Prompt Modal ----
 function showAIPrompt(job) {
   currentJobPrompt = job;
   aiPromptModal.classList.remove("hidden");
@@ -180,13 +185,27 @@ profileBack.onclick = () => { profileScreen.classList.remove("active"); swipeScr
 tabPayment.onclick = () => alert("Payment Plan: demo only");
 
 // ---- Dashboard ----
+function deduplicateJobs(jobsArray) {
+  const seen = new Set();
+  return jobsArray.filter(job => {
+    const key = job.title + "|" + job.company + "|" + job.source;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function updateDashboard() {
+  appliedJobs = deduplicateJobs(appliedJobs);
+  skippedJobs = deduplicateJobs(skippedJobs);
+
   appliedCountEl.textContent = appliedJobs.length;
   skippedCountEl.textContent = skippedJobs.length;
+
   appliedList.innerHTML = appliedJobs.map(j=>`<li>${j.title} - ${j.company} (${j.source})</li>`).join("");
   skippedList.innerHTML = skippedJobs.map(j=>`<li>${j.title} - ${j.company} (${j.source})</li>`).join("");
 }
 
 // ---- Initialize ----
 renderCards();
-swipeScreen.classList.add("active");
+swipeScreen.classList.add("active"); // demo starts in swipe mode
