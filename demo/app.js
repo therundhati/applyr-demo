@@ -15,7 +15,7 @@ function createCard(job, index) {
     <p><strong>Location:</strong> ${job.location}</p>
     <p><strong>Source:</strong> ${job.source}</p>
     <p>${job.description}</p>
-    <div class="perks">
+    <div>
       ${job.perks.map(p => `<span class="perk">${p}</span>`).join("")}
     </div>
   `;
@@ -51,7 +51,7 @@ function addSwipe(card, job) {
   function drag(e) {
     if (!isDragging) return;
     currentX = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
-    card.style.transform = `translateX(${currentX}px) rotate(${currentX/18}deg)`;
+    card.style.transform = `translateX(${currentX}px) rotate(${currentX/15}deg)`;
 
     let intensity = Math.min(Math.abs(currentX) / 150, 1);
     if (currentX > 0) {
@@ -137,6 +137,13 @@ function updateDashboard() {
 function switchView(viewId) {
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
   document.getElementById(viewId).classList.add("active");
+
+  document.querySelectorAll(".bottom-nav button")
+    .forEach(b => b.classList.remove("activeTab"));
+
+  if (viewId === "jobsView") document.getElementById("jobsTab").classList.add("activeTab");
+  if (viewId === "dashboardView") document.getElementById("dashboardTab").classList.add("activeTab");
+  if (viewId === "profileView") document.getElementById("profileTab").classList.add("activeTab");
 }
 
 loadCards();
