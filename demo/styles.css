@@ -1,135 +1,44 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #e5e7eb;
-  display: flex;
-  justify-content: center;
+/* PROFILE */
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-#appWrapper {
-  width: 100%;
-  max-width: 430px;
-  height: 100vh;
-  background: #f4f6f8;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 0 40px rgba(0,0,0,0.15);
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
 
-/* ---------- VIEWS ---------- */
-
-.view {
-  display: none;
-  padding: 16px;
-  padding-bottom: 90px;
-  height: 100%;
-  overflow-y: auto;
+.profile-section {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 15px;
 }
 
-.view.active {
-  display: block;
-}
-
-/* ---------- CARDS ---------- */
-
-#cardContainer {
-  position: relative;
-  height: calc(100vh - 120px);
-}
-
-.card {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: white;
-  border-radius: 20px;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.card h2 {
-  color: #1d4ed8;
-  text-decoration: underline;
-}
-
-.perk {
-  display: inline-block;
-  background: #e0e7ff;
-  padding: 6px 12px;
-  margin: 6px 6px 0 0;
-  border-radius: 12px;
-  font-size: 12px;
-}
-
-/* ---------- DASHBOARD ---------- */
-
-.dashboard-section li {
+.editable {
   color: #1d4ed8;
   text-decoration: underline;
   cursor: pointer;
-  margin-bottom: 6px;
 }
 
-/* ---------- PROFILE ---------- */
+/* NAV BAR (TOP OF FOOTER) */
 
-.profile-field {
-  margin-bottom: 12px;
-  font-size: 14px;
-}
-
-/* ---------- MODAL FIX ---------- */
-
-#modalOverlay {
+.nav-bar {
   position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;   /* FIX: ensures it sits above cards */
-}
-
-.hidden {
-  display: none !important;
-}
-
-.modal {
-  background: white;
-  width: 90%;
-  padding: 20px;
-  border-radius: 16px;
-}
-
-textarea {
-  width: 100%;
-  height: 150px;
-  margin-top: 10px;
-  resize: none;
-}
-
-.modal-actions {
-  margin-top: 12px;
-  display: flex;
-  justify-content: space-between;
-}
-
-/* ---------- BOTTOM NAV ---------- */
-
-.bottom-nav {
-  position: absolute;
-  bottom: 0;
+  bottom: 40px;
   width: 100%;
   display: flex;
   justify-content: space-around;
   background: white;
   border-top: 1px solid #ddd;
-  padding: 14px 0;
+  padding: 12px 0;
 }
 
-.bottom-nav button {
+.nav-bar button {
   background: none;
   border: none;
   font-size: 14px;
@@ -137,7 +46,22 @@ textarea {
   color: #6b7280;
 }
 
-.bottom-nav button.activeTab {
+.nav-bar button.activeTab {
   color: #1d4ed8;
   font-weight: 600;
+}
+
+/* BRAND BAR */
+
+.brand-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  font-weight: bold;
+  color: #1d4ed8;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  letter-spacing: 2px;
 }
