@@ -1,4 +1,109 @@
+/* ============================= */
+/* GLOBAL */
+/* ============================= */
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #e5e7eb;
+  display: flex;
+  justify-content: center;
+}
+
+/* ============================= */
+/* MOBILE FRAME */
+/* ============================= */
+
+#appWrapper {
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  background: #f4f6f8;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 40px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+/* ============================= */
+/* VIEWS */
+/* ============================= */
+
+.view {
+  flex: 1;
+  display: none;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.view.active {
+  display: block;
+}
+
+/* ============================= */
+/* CARD CONTAINER */
+/* ============================= */
+
+#cardContainer {
+  position: relative;
+  height: 100%;
+}
+
+/* ============================= */
+/* JOB CARDS */
+/* ============================= */
+
+.card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.card h2 {
+  color: #1d4ed8;
+  text-decoration: underline;
+  margin-top: 0;
+}
+
+.card p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.perk {
+  display: inline-block;
+  background: #e0e7ff;
+  padding: 6px 12px;
+  margin: 6px 6px 0 0;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+/* ============================= */
+/* DASHBOARD */
+/* ============================= */
+
+.dashboard-section h3 {
+  margin-bottom: 6px;
+}
+
+.dashboard-section li {
+  color: #1d4ed8;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+/* ============================= */
 /* PROFILE */
+/* ============================= */
 
 .profile-header {
   text-align: center;
@@ -25,12 +130,49 @@
   cursor: pointer;
 }
 
-/* NAV BAR (TOP OF FOOTER) */
+/* ============================= */
+/* MODAL */
+/* ============================= */
+
+#modalOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.modal {
+  background: white;
+  width: 90%;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  margin-top: 10px;
+  resize: none;
+}
+
+.modal-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ============================= */
+/* NAVIGATION BAR */
+/* ============================= */
 
 .nav-bar {
-  position: absolute;
-  bottom: 40px;
-  width: 100%;
   display: flex;
   justify-content: space-around;
   background: white;
@@ -44,6 +186,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #6b7280;
+  cursor: pointer;
 }
 
 .nav-bar button.activeTab {
@@ -51,12 +194,11 @@
   font-weight: 600;
 }
 
+/* ============================= */
 /* BRAND BAR */
+/* ============================= */
 
 .brand-bar {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
   text-align: center;
   padding: 10px 0;
   font-weight: bold;
