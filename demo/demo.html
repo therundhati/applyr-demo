@@ -35,16 +35,18 @@
 
       <div class="profile-field"><strong>Name:</strong> Arundhati Dixit</div>
       <div class="profile-field"><strong>Resume:</strong> cv.pdf</div>
+      <div class="profile-field"><strong>Education:</strong> MBA</div>
+      <div class="profile-field"><strong>Professional Background:</strong> Product & Strategy</div>
 
-      <div class="profile-field">
-        <strong>Education:</strong>
-        <button>Edit</button>
-      </div>
+      <hr />
 
-      <div class="profile-field">
-        <strong>Professional Background:</strong>
-        <button>Edit</button>
-      </div>
+      <h3>Application Prefills</h3>
+
+      <div class="profile-field"><strong>Gender:</strong> Female</div>
+      <div class="profile-field"><strong>Ethnicity:</strong> Asian</div>
+      <div class="profile-field"><strong>Veteran Status:</strong> Not a Veteran</div>
+      <div class="profile-field"><strong>Disability Status:</strong> Not Disabled</div>
+      <div class="profile-field"><strong>Work Authorization:</strong> Authorized to work in U.S.</div>
     </div>
 
     <!-- COVER LETTER MODAL -->
@@ -63,9 +65,9 @@
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
-      <button onclick="switchView('jobsView')">Jobs</button>
-      <button onclick="switchView('dashboardView')">Dashboard</button>
-      <button onclick="switchView('profileView')">Profile</button>
+      <button id="jobsTab" class="activeTab" onclick="switchView('jobsView')">Jobs</button>
+      <button id="dashboardTab" onclick="switchView('dashboardView')">Dashboard</button>
+      <button id="profileTab" onclick="switchView('profileView')">Profile</button>
     </div>
 
   </div>
